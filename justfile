@@ -92,5 +92,8 @@ docker-cu128 *run_args: (_docker '--build-arg=CUDA_VERSION=12.8.1' run_args)
 # Run the CUDA 13.0 docker container.
 docker-cu130 *run_args: (_docker '--build-arg=CUDA_VERSION=13.0.0' run_args)
 
+# Run the ROCm 6.3 docker container (AMD GPUs).
+docker-rocm *run_args: (_docker '-f docker/rocm.Dockerfile' run_args)
+
 # Run the nightly docker container.
 docker-nightly *run_args: (_docker '-f docker/nightly.Dockerfile' run_args)
