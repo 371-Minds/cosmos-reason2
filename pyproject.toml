@@ -24,6 +24,7 @@ dependencies = [
 [project.optional-dependencies]
 cu128 = ["cosmos-reason2-utils[cu128_torch29]"]
 cu130 = ["cosmos-reason2-utils[cu130_torch29]"]
+rocm = ["cosmos-reason2-utils[rocm63]"]
 
 [dependency-groups]
 dev = [

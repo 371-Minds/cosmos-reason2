@@ -80,6 +80,14 @@ cu130_torch29 = [
   "torchao==0.14.1", # version compatible with torch 2.9: https://github.com/pytorch/ao/issues/2919
   "torchcodec==0.9.1", # version compatible with torch 2.9: https://github.com/meta-pytorch/torchcodec/releases
 ]
+# ROCm 6.3 (AMD GPUs on x86)
+rocm63 = [
+  "vllm",
+  "torch==2.7.0",
+  "torchvision", # version pinned by torch
+  "torchao==0.14.1", # version compatible with torch 2.7: https://github.com/pytorch/ao/issues/2919
+  "torchcodec==0.9.1; platform_machine != 'aarch64'", # version compatible with torch 2.7: https://github.com/meta-pytorch/torchcodec/releases
+]
 
 [tool.uv]
 conflicts = [
@@ -87,6 +95,7 @@ conflicts = [
     {extra = "cu128_torch28"},
     {extra = "cu128_torch29"},
     {extra = "cu130_torch29"},
+    {extra = "rocm63"},
   ],
 ]
 
@@ -98,6 +107,7 @@ torch = [
   { index = "pytorch-cu128", extra = "cu128_torch28" },
   { index = "pytorch-cu128", extra = "cu128_torch29" },
   { index = "pytorch-cu130", extra = "cu130_torch29" },
+  { index = "pytorch-rocm63", extra = "rocm63" },
 ]
 torchcodec = [
   { index = "cosmos-cu130", extra = "cu130_torch29", marker = "platform_machine == 'aarch64'" },
@@ -106,6 +116,7 @@ torchvision = [
   { index = "pytorch-cu128", extra = "cu128_torch28" },
   { index = "pytorch-cu128", extra = "cu128_torch29" },
   { index = "pytorch-cu130", extra = "cu130_torch29" },
+  { index = "pytorch-rocm63", extra = "rocm63" },
 ]
 vllm = [
   { index = "vllm13-cu130", extra = "cu130_torch29" },
@@ -124,6 +135,11 @@ explicit = true
 [[tool.uv.index]]
 name = "pytorch-cu130"
 url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-rocm63"
+url = "https://download.pytorch.org/whl/rocm6.3"
 explicit = true
 
 [[tool.uv.index]]

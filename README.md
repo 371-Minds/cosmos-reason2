@@ -100,6 +100,13 @@ For DGX Spark and Jetson AGX, you must use CUDA 13.0. Additionally, you must set
 export TRITON_PTXAS_PATH="/usr/local/cuda/bin/ptxas"
 ```
 
+For AMD GPUs on x86, install [ROCm 6.3](https://rocm.docs.amd.com/en/latest/deploy/linux/index.html) and use:
+
+```shell
+uv sync --extra rocm
+source .venv/bin/activate
+```
+
 </details>
 
 <details id="docker-container"><summary><b>Docker Container</b></summary>
@@ -121,11 +128,19 @@ CUDA variants:
 
 For DGX Spark and Jetson AGX, you must use CUDA 13.0.
 
+For AMD GPUs on x86, build and run the ROCm container:
+
+```bash
+image_tag=$(docker build -f docker/rocm.Dockerfile -q .)
+```
+
 Run the container:
 
 ```bash
 docker run -it --gpus all --ipc=host --rm -v .:/workspace -v /workspace/.venv -v /workspace/examples/cosmos_rl/.venv -v /root/.cache:/root/.cache -e HF_TOKEN="$HF_TOKEN" $image_tag
 ```
+
+For AMD GPUs, replace `--gpus all` with `--device=/dev/kfd --device=/dev/dri`.
 
 Optional arguments:
 
@@ -150,12 +165,13 @@ Cosmos-Reason2 works on Hopper and Blackwell. Additional hardware configurations
 
 Examples have been tested on the following devices:
 
-| GPU | CUDA Version | Functionality |
+| GPU | CUDA/ROCm Version | Functionality |
 | --- | --- | --- |
-| NVIDIA H100 | 12.8 | inference/post-training/quantization |
-| NVIDIA GB200 | 13.0 | inference |
-| NVIDIA DGX Spark | 13.0 | inference |
-| NVIDIA Jetson AGX Thor (Edge) | 13.0 | Transformers inference. vLLM inference is coming soon! |
+| NVIDIA H100 | CUDA 12.8 | inference/post-training/quantization |
+| NVIDIA GB200 | CUDA 13.0 | inference |
+| NVIDIA DGX Spark | CUDA 13.0 | inference |
+| NVIDIA Jetson AGX Thor (Edge) | CUDA 13.0 | Transformers inference. vLLM inference is coming soon! |
+| AMD Instinct (x86) | ROCm 6.3 | inference |
 
 ### Transformers
 
